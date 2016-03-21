@@ -13,7 +13,7 @@ B289089 조원태
 Brainstorming
 ex) 키워드 5개 산정, 5개로 문장 만들기
 
------add key here--------
+-----add key here--------\n
 gl hf
 
 
