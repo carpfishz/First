@@ -15,7 +15,7 @@ https://github.com/carpfishz/Project.git<br>
 ex) 키워드 5개 산정, 5개로 문장 만들기<br>
 
 -----add key here--------<br>
-gl hf<br>
+열람실, 강의실 대여 프로그램<br>
 
 
 
