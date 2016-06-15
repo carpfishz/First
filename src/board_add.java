@@ -19,39 +19,37 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class join extends AppCompatActivity {
-    EditText id,pw,name,major,position,phone;
-    String result,ticket;
+public class board_add extends AppCompatActivity {
+    EditText name, content;
+    String recId,result, ticket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.join);
+        setContentView(R.layout.board_add);
 
-        id = (EditText)findViewById(R.id.id);
-        pw = (EditText)findViewById(R.id.pw);
+        Intent intentSs = getIntent();
+        recId = intentSs.getExtras().getString("sendId");
+
         name = (EditText)findViewById(R.id.name);
-        major = (EditText)findViewById(R.id.major);
-        position = (EditText)findViewById(R.id.position);
-        phone = (EditText)findViewById(R.id.phone);
-        Button btn = (Button)findViewById(R.id.join_ok);
+        content = (EditText)findViewById(R.id.content);
+
+        Button btn = (Button)findViewById(R.id.add);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpPostData();
 
-                if(id.getText().toString().equals("")){
-                    Toast.makeText(join.this, "id를 입력하세요.", Toast.LENGTH_SHORT).show();
+                if(name.getText().toString().equals("")){
+                    Toast.makeText(board_add.this, "제목을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }else{
-                    if(pw.getText().toString().equals("")){
-                        Toast.makeText(join.this, "pw를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    if(content.getText().toString().equals("")){
+                        Toast.makeText(board_add.this, "내용 입력하세요.", Toast.LENGTH_SHORT).show();
                     }else{
-                        if(result.equals("success")) {
-                            Toast.makeText(join.this, "가입되었습니다.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(join.this, MainActivity.class);
-                            startActivity(intent);
-                        }else if(result.equals("fail")){
-                            Toast.makeText(join.this, "이미 사용중인 아이디입니다.", Toast.LENGTH_SHORT).show();
+                        if(ticket.equals("success")) {
+                            Toast.makeText(board_add.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(board_add.this, "알수없는 오류가 발생하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -73,12 +71,10 @@ public class join extends AppCompatActivity {
 
             StringBuffer buffer = new StringBuffer();
 
-            buffer.append("pid").append("=").append(id.getText().toString()).append("&");
-            buffer.append("ppw").append("=").append(pw.getText().toString()).append("&");
-            buffer.append("pmajor").append("=").append(major.getText().toString()).append("&");
+            buffer.append("pid").append("=").append(recId.toString()).append("&");
             buffer.append("pname").append("=").append(name.getText().toString()).append("&");
-            buffer.append("ppos").append("=").append(position.getText().toString()).append("&");
-            buffer.append("pphone").append("=").append(phone.getText().toString());
+            buffer.append("pcontent").append("=").append(content.getText().toString());
+
 
             OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
             PrintWriter writer = new PrintWriter(outStream);
@@ -90,11 +86,18 @@ public class join extends AppCompatActivity {
             StringBuilder builder = new StringBuilder();
             String str;
 
+            ticket="";
             while ((str = reader.readLine()) != null) {
+                if(str==null){
+
+                }
+                else
+                    ticket+=str;
                 builder.append(str);
+
             }
-            result = builder.toString();
-            //Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(this, ticket, Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 

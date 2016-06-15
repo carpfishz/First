@@ -1,14 +1,10 @@
 package com.example.sinramyoun.object;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,55 +16,36 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Administrator on 2015-12-10.
- */
-public class myreservation extends AppCompatActivity {
-    String recId,id,stat;
-    ArrayAdapter<String>    m_Adapter;
+
+public class board_del extends AppCompatActivity {
+    String recId,id;
+
     String ticket="";
-    EditText room;
-    String[] res;
+    EditText num;
+    String[] test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.myreservation);
+        setContentView(R.layout.board_del);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        num = (EditText)findViewById(R.id.bnum);
 
-        Intent intentSs = getIntent();
-        recId = intentSs.getExtras().getString("sendId");
-        id=recId;
-
-
-        ListView list = (ListView)findViewById(R.id.listView);
-        m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
-        list.setAdapter(m_Adapter);
-        Button btn = (Button) findViewById(R.id.mycheck);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button some = (Button) findViewById(R.id.bdel);
+        some.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpPostData();
-                if( res[0] != null)
-                {
-                    m_Adapter.add("강의실 : "+res[0]);
-                    m_Adapter.add("예약날자 : "+res[1]);
-                    m_Adapter.add("시작시간 : "+res[2]);
-                    m_Adapter.add("종료시간 : "+res[3]);
-                    m_Adapter.add("고객 이름 : "+res[4]);
-                    m_Adapter.add("예약 상태 : " + res[5]);
-
-                }
-                else{
-                   Toast.makeText(getApplicationContext(), "예약된 강의실이 존재하지 않습니다", Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(getApplicationContext(),res[0] , Toast.LENGTH_SHORT).show();
-
-                }
+                //Toast.makeText(board_del.this, ticket, Toast.LENGTH_LONG).show();
+                if(ticket.equals("success"))
+                    Toast.makeText(board_del.this, "삭제되었습니다.", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(board_del.this, "알수없는 오류가 발생하였습니다.",Toast.LENGTH_LONG).show();
 
 
             }
         });
+
+
 
     }
     public void HttpPostData() {
@@ -87,7 +64,8 @@ public class myreservation extends AppCompatActivity {
             StringBuffer buffer = new StringBuffer();
 
             //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
-            buffer.append("id").append("=").append(id);
+
+            buffer.append("pnum").append("=").append(num.getText().toString());
 
 
             OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
@@ -100,6 +78,7 @@ public class myreservation extends AppCompatActivity {
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
             String str;
+            ticket="";
 
             while ((str = reader.readLine()) != null) {
                 if(str==null){
@@ -110,10 +89,9 @@ public class myreservation extends AppCompatActivity {
                 builder.append(str);
 
             }
-            res=ticket.split("&");
 
 
-            //Toast.makeText(this, ticket, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, test[0], Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 
@@ -121,4 +99,6 @@ public class myreservation extends AppCompatActivity {
 
         }
     }
+
+
 }

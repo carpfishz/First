@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,53 +18,40 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button btn1,btn2;
-    EditText id,pw;
-    String loginResult=null; //loginResult는 아이디값을 가져옴 DB에서 fail이라는 아이디는 생성못하도록만들기
-    String[] result;
+public class board_read extends AppCompatActivity {
+    String num,id,stat;
+    ArrayAdapter<String> m_Adapter;
+    String ticket="";
+    EditText room;
+    String[] res;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.board_read);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        btn1 = (Button)findViewById(R.id.join);
-        btn2 = (Button)findViewById(R.id.login);
+        Intent intentSs = getIntent();
+        num = intentSs.getExtras().getString("num");
 
-        id = (EditText)findViewById(R.id.editText);
-        pw = (EditText)findViewById(R.id.editText2);
 
-        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
+        ListView list = (ListView)findViewById(R.id.rlist);
+        m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        list.setAdapter(m_Adapter);
+
+        HttpPostData();
+
+        m_Adapter.add("번호 : "+res[0]);
+        m_Adapter.add("제목 : "+res[1]);
+        m_Adapter.add("내용 : "+res[2]);
+
+
+
+
+
     }
-
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.join:
-                Intent joinIn = new Intent(MainActivity.this,join.class);
-                startActivity(joinIn);
-                break;
-            case R.id.login:
-                HttpPostData();
-                if(result[0].equals("success")){
-
-                    Intent loginIn = new Intent(MainActivity.this, mainpage.class);
-                    loginIn.putExtra("sendId",id.getText().toString());
-                    loginIn.putExtra("spermit",result[1]);
-                    startActivity(loginIn);
-                }else if(loginResult.equals("fail")){
-                    Toast.makeText(this,"id,pw를 확인하세요",Toast.LENGTH_SHORT);
-                }else{
-                    Toast.makeText(this,"id,pw를 입력하세요",Toast.LENGTH_SHORT);
-                }
-                break;
-        }
-    }
-
     public void HttpPostData() {
         try {
 
@@ -81,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             StringBuffer buffer = new StringBuffer();
 
             //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
-            buffer.append("id").append("=").append(id.getText().toString().trim()).append("&");
-            buffer.append("pw").append("=").append(pw.getText().toString().trim());
+            buffer.append("pnum").append("=").append(num);
+
 
             OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
             PrintWriter writer = new PrintWriter(outStream);
@@ -96,12 +83,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String str;
 
             while ((str = reader.readLine()) != null) {
-                builder.append(str);
-            }
 
-            loginResult = builder.toString();
-            result=loginResult.split("&");
-            //Toast.makeText(this, loginResult, Toast.LENGTH_SHORT).show();
+                if(str==null){
+
+                }
+                else
+                    ticket+=str;
+                builder.append(str);
+
+
+            }
+            res=ticket.split("&");
+
+
+            //Toast.makeText(this, res[7], Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 
@@ -109,4 +104,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
 }

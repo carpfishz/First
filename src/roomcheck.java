@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +18,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 
 public class roomcheck extends AppCompatActivity {
     String recId,id,stat;
@@ -40,33 +40,36 @@ public class roomcheck extends AppCompatActivity {
         Intent intentSs = getIntent();
         recId = intentSs.getExtras().getString("sendId");
         id=recId;
-        HttpPostData();
+
 
         ListView list = (ListView)findViewById(R.id.listView);
         m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
         list.setAdapter(m_Adapter);
 
-        Button btn2 = (Button) findViewById(R.id.btnall);
-        Button btn = (Button) findViewById(R.id.some);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button all = (Button) findViewById(R.id.btnall);
+        Button some = (Button) findViewById(R.id.some);
+        some.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpPostData();
-                if (test[1].length() == 4) {
-                    m_Adapter.add("강의실 : " + test[1]);
-                } else {
-                    Toast.makeText(getApplicationContext(), "강의실이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                ListView list = (ListView)findViewById(R.id.listView);
+                m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
+                list.setAdapter(m_Adapter);
 
+                for(int i=0; i<test.length; i++){
+                    m_Adapter.add(test[i]);
                 }
-
-
             }
         });
-        btn2.setOnClickListener(new View.OnClickListener() {
+
+        all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpPostData();
-                for(int i=1; i<11; i++){
+                HttpPostData2();
+                ListView list = (ListView)findViewById(R.id.listView);
+                m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
+                list.setAdapter(m_Adapter);
+                for(int i=0; i<test.length; i++){
                     m_Adapter.add("강의실 : "+test[i]);
                 }
             }
@@ -89,8 +92,9 @@ public class roomcheck extends AppCompatActivity {
 
             StringBuffer buffer = new StringBuffer();
 
-            buffer.append("id").append("=").append(id).append("&");
-            buffer.append("room").append("=").append(room.getText().toString());
+            //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
+
+            buffer.append("proom").append("=").append(room.getText().toString());
 
 
             OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
@@ -98,10 +102,12 @@ public class roomcheck extends AppCompatActivity {
             writer.write(buffer.toString());
             writer.flush();
 
+            //서버에서 전송받기
             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
             String str;
+            ticket="";
 
             while ((str = reader.readLine()) != null) {
                 if(str==null){
@@ -112,8 +118,60 @@ public class roomcheck extends AppCompatActivity {
                 builder.append(str);
 
             }
-            test=ticket.split(" ");
+            test=ticket.split("&");
 
+            //Toast.makeText(this, test[0], Toast.LENGTH_SHORT).show();
+
+        } catch (MalformedURLException e) {
+
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void HttpPostData2() {
+        try {
+
+            URL url = new URL("#");
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+            http.setDefaultUseCaches(false);
+            http.setDoInput(true);
+            http.setDoOutput(true);
+            http.setRequestMethod("POST");
+
+            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+            StringBuffer buffer = new StringBuffer();
+
+            //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
+            //buffer.append("om").append("=").append(room.getText().toString());
+
+
+            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
+            PrintWriter writer = new PrintWriter(outStream);
+            writer.write(buffer.toString());
+            writer.flush();
+
+            //서버에서 전송받기
+            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
+            BufferedReader reader = new BufferedReader(tmp);
+            StringBuilder builder = new StringBuilder();
+            String str;
+            ticket="";
+
+            while ((str = reader.readLine()) != null) {
+                if(str==null){
+
+                }
+                else
+                    ticket+=str;
+                builder.append(str);
+
+            }
+
+            test=ticket.split("&");
+            //Toast.makeText(this, test[0], Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 

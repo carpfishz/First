@@ -32,6 +32,7 @@ public class reservation extends AppCompatActivity {
     EditText resdate,resroom;
     static final int DATE_DIALOG_ID = 0;
     String recId;
+    String per;
     String starttime="";
     String endtime="";
     String result="";
@@ -90,6 +91,7 @@ public class reservation extends AppCompatActivity {
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(reservation.this, listener, 2016, 5, 17);
                 dialog.show();
+                //showDialog(DATE_DIALOG_ID);
             }
         });
         complete.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +100,11 @@ public class reservation extends AppCompatActivity {
                 HttpPostData();
                 if (result.equals("success")) {
                     Toast.makeText(getApplicationContext(), "예약 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(reservation.this, mainpage.class);
-                    intent.putExtra("sendId", recId);
-                    startActivity(intent);
+                    //Intent intent = new Intent(reservation.this, mainpage.class);
+                    //intent.putExtra("sendId", recId);
+                    //intent.putExtra("spermit", per);
+                    //startActivity(intent);
+                    //Toast.makeText(getApplicationContext(),res[0] , Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -125,6 +129,7 @@ public class reservation extends AppCompatActivity {
 
             StringBuffer buffer = new StringBuffer();
 
+            //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
             buffer.append("id").append("=").append(recId).append("&");
             buffer.append("proom").append("=").append(resroom.getText().toString()).append("&");
             buffer.append("pstarttime").append("=").append(starttime).append("&");
@@ -137,6 +142,7 @@ public class reservation extends AppCompatActivity {
             writer.write(buffer.toString());
             writer.flush();
 
+            //서버에서 전송받기
             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
@@ -147,6 +153,7 @@ public class reservation extends AppCompatActivity {
             }
             result = builder.toString();
 
+            //loginResult = builder.toString();
 
 
         } catch (MalformedURLException e) {
@@ -160,6 +167,7 @@ public class reservation extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            //Toast.makeText(getApplicationContext(), year + "년" + monthOfYear + "월" + dayOfMonth +"일", Toast.LENGTH_SHORT).show();
             resdate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth );
         }
     };
@@ -171,6 +179,7 @@ public class reservation extends AppCompatActivity {
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
+            //updateDisplay();
         }
     };
     @Override

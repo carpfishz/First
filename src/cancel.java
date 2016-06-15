@@ -61,6 +61,7 @@ public class cancel extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "예약된 강의실이 존재하지 않습니다", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),res[0] , Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -73,9 +74,8 @@ public class cancel extends AppCompatActivity {
                 HttpPostData2();
                 if (result.equals("success")) {
                     Toast.makeText(getApplicationContext(), "예약이 취소되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(cancel.this, mainpage.class);
-                    intent.putExtra("sendId", recId);
-                    startActivity(intent);
+
+                    //Toast.makeText(getApplicationContext(),res[0] , Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -99,6 +99,7 @@ public class cancel extends AppCompatActivity {
 
             StringBuffer buffer = new StringBuffer();
 
+            //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
             buffer.append("id").append("=").append(id);
 
 
@@ -107,6 +108,7 @@ public class cancel extends AppCompatActivity {
             writer.write(buffer.toString());
             writer.flush();
 
+            //서버에서 전송받기
             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
@@ -124,6 +126,7 @@ public class cancel extends AppCompatActivity {
             res=ticket.split("&");
 
 
+            //Toast.makeText(this, ticket, Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 
@@ -146,6 +149,7 @@ public class cancel extends AppCompatActivity {
 
             StringBuffer buffer = new StringBuffer();
 
+            //"bname","mname"은 php에서 값을 받는 변수명과 같아야함//////////////////////////////////////////
             buffer.append("id").append("=").append(id);
 
 
@@ -154,6 +158,7 @@ public class cancel extends AppCompatActivity {
             writer.write(buffer.toString());
             writer.flush();
 
+            //서버에서 전송받기
             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
@@ -164,6 +169,7 @@ public class cancel extends AppCompatActivity {
             result = builder.toString();
 
 
+            //Toast.makeText(this, ticket, Toast.LENGTH_SHORT).show();
 
         } catch (MalformedURLException e) {
 
