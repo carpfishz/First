@@ -26,10 +26,6 @@ if(isset($room)) {
 
 // $id = $_POST['id'];
 // $room = $_POST['proom'];
-// $db_host = "chanwoo.hust.net";
-// $db_user = "carpfish";
-// $db_password = "carpfish";
-// $db_name = "test";
 // $con=mysqli_connect($db_host, $db_user, $db_password, $db_name);
 // if(mysqli_connect_error())
 // {
