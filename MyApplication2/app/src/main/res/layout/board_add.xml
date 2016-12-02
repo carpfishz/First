@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="게시물 등록"
+        android:gravity="center_horizontal"
+        android:background="#ffbb14"
+        android:layout_weight="0.02"
+        android:layout_gravity="center" />
+
+    <TableLayout
+        android:paddingLeft="50px"
+        android:paddingRight="50px"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:text="제목"
+                android:layout_weight="0.1"
+                android:id="@+id/none1" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_weight="0.9"
+                android:id="@+id/name"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:text="내용"
+                android:layout_weight="0.1"
+                android:id="@+id/none" />
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_weight="0.9"
+                android:layout_height="200dp"/>
+        </TableRow>
+
+    </TableLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="등록"
+        android:id="@+id/add"
+        android:layout_column="3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"/>
+
+</LinearLayout>

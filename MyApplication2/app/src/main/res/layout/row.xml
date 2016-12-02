@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Room"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/r_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R_time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp"
+        android:layout_alignBottom="@+id/room"
+        android:layout_toEndOf="@+id/s_time"
+        android:layout_marginStart="20dp" />
+    <TextView
+        android:id="@+id/s_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/room"
+        android:layout_marginTop="5dp"
+        android:text="S_time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/e_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E_time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp"
+        android:layout_alignTop="@+id/s_time"
+        android:layout_alignStart="@+id/r_time" />
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/s_time"
+        android:layout_marginTop="5dp"
+        android:text="ID"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/w_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="W_time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp"
+        android:layout_alignTop="@+id/id"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/access"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="승인"
+        android:textColor="#0099CC" />
+
+    <Button
+        android:id="@+id/deny"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/access"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="거절"
+        android:textColor="#0099CC" />
+
+
+</RelativeLayout>
+

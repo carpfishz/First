@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.sinramyoun.object" >
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".join"/>
+        <activity android:name=".reservation"/>
+        <activity android:name=".cancel"/>
+        <activity android:name=".mainpage"/>
+        <activity android:name=".myreservation"/>
+        <activity android:name=".roomcheck"/>
+        <activity android:name=".access"/>
+        <activity android:name=".addclass"/>
+        <activity android:name=".peoplecheck"/>
+        <activity android:name=".board"/>
+        <activity android:name=".board_read"/>
+        <activity android:name=".board_del"/>
+        <activity android:name=".board_add"/>
+
+    </application>
+
+</manifest>
